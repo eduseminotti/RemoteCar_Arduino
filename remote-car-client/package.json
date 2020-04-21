@@ -1,0 +1,15 @@
+{
+  "name": "remote-car-client",
+  "version": "1.0.0",
+  "description": "This client will receive data from a socket server and send this data to the arduino",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gustavo Marin Suppi / Eduardo Seminotti",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io-client": "^2.3.0"
+  }
+}
