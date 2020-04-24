@@ -1,6 +1,6 @@
 var io = require('socket.io-client')
 
-var socket = io('http://localhost:3000');
+var socket = io('https://remote-car-server.herokuapp.com/');
 
   socket.on('connect', function(){});
   socket.on('event', function(data){});

@@ -1,15 +1,8 @@
 #include <VirtualWire.h>
 
 #define servo1 9
-#define pinRF  3
 
-int IN1 = 4;
-int IN2 = 5;
-int IN3 = 6;
-int IN4 = 7;
-int delay1 = 1000;
-int delay2 = 2000;
-
+#define pinRF  12
 
 struct tipoPacote {
   int valor1;
@@ -18,120 +11,37 @@ struct tipoPacote {
 };
 
 tipoPacote pacote;
+
 uint8_t buf[sizeof(pacote)];
 uint8_t buflen = sizeof(pacote);
 
-
-void back() {
-  //Gira o Motor A no sentido horario
-  digitalWrite(IN1, HIGH);
-  digitalWrite(IN2, LOW);
-  //Gira o Motor B no sentido horario
-  digitalWrite(IN3, HIGH);
-  digitalWrite(IN4, LOW);
-}
-
-void brake() {
-  //Para o motor A
-  digitalWrite(IN1, HIGH);
-  digitalWrite(IN2, HIGH);
-  //Para o motor B
-  digitalWrite(IN3, HIGH);
-  digitalWrite(IN4, HIGH);
-}
-
-void front() {
-  //Gira o Motor A no sentido anti-horario
-  digitalWrite(IN1, LOW);
-  digitalWrite(IN2, HIGH);
-  //Gira o Motor B no sentido anti-horario
-  digitalWrite(IN3, LOW);
-  digitalWrite(IN4, HIGH);
-}
-
-void frontRight() {
-  //vira volante pra direita
-  turnRight();
-  front();
-}
-
-void frontLeft() {
-  //vira volante pra direita
-  turnLeft();
-  front();
-}
-
-void backRight() {
-  //vira volante pra direita
-  turnRight();
-  back();
-}
-
-void backLeft() {
-  //vira volante pra direita
-  turnLeft();
-  back();
-}
-
-void turnRight() {
-  servo75graus();
-  delay(500);
-}
-
-void centralizedWheel() {
-  servo45graus();
-  delay(500);
-}
-
-void turnLeft() {
-  servo15graus();
-  delay(500);
-}
 void setup() {
-
   servo45graus();
-  //centralizedWheel() ;
   pinMode(servo1, OUTPUT); //saída para o servo1
 
-  //Define os pinos como saida
-  pinMode(IN1, OUTPUT);
-  pinMode(IN2, OUTPUT);
-  pinMode(IN3, OUTPUT);
-  pinMode(IN4, OUTPUT);
-
-  vw_set_rx_pin(pinRF);
-  vw_setup(2000);
-  vw_rx_start();
-
-
+  //  vw_set_rx_pin(pinRF);
+  //  vw_setup(2000);
+  //  vw_rx_start();
 }
 
 void loop() {
 
-  if ( vw_have_message() ) {
-    vw_get_message(buf, &buflen);
-    memcpy(&pacote, &buf, buflen);
+  servo45graus();
+  delay(2000);
 
-    if (pacote.valor1 == 1) {
-      turnRight();
-      delay(2000);
-      centralizedWheel();
-    }
-    if (pacote.valor2 == 2) {
-      back();
-      delay(2000);
-      brake();
-    }
+  servo75graus();
+  delay(2000);
 
-    if (pacote.valor3 == 3) {
-      turnLeft();
+  servo45graus();
+  delay(2000);
 
-      delay(2000);
-      centralizedWheel();
-      delay(2000);
+  servo15graus();
+  delay(2000);
 
-    }
-  }
+  //  if ( vw_have_message() ) {
+  //    vw_get_message(buf, &buflen);
+  //    memcpy(&pacote, &buf, buflen);
+  //  }
 }
 
 void servo0graus()              //Posiciona o servo em 0 graus
